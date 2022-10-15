@@ -10,12 +10,13 @@ import SwiftUI
 
 struct FlatSignUpView: View {
     @State var email = ""
+    @State var amount: Double = 0
     @State var password = ""
     @State var passwordAgain = ""
     
     var body: some View {
         if #available(iOS 15.0, *) {
-            VStack{
+            VStack {
                 Text("Donation")
                     .font(.largeTitle)
                     .bold()
@@ -31,10 +32,10 @@ struct FlatSignUpView: View {
                 
                 VStack (spacing: 12) {
                     
-                    TextField("Enter username", text: $email)
+                    Text("Amount you will donate: \(amount, specifier: "%.1f")")
                         .modifier(FlatGlassView())
                     
-                    TextField("Enter email", text: $email)
+                    Slider(value: $amount, in: 0...100)
                         .modifier(FlatGlassView())
                     
                 }
@@ -58,6 +59,7 @@ struct FlatSignUpView: View {
                 }
                 
             }
+            .frame(maxWidth: 320)
             .padding()
             .background(.ultraThinMaterial)
             .foregroundColor(Color.primary.opacity(0.80))
@@ -131,7 +133,6 @@ struct ContentView: View {
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                ButtonView()
                 FlatSignUpView()
             }
             
