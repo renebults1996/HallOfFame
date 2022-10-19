@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D7A1130928FF59EC00F17894 /* ShowPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A1130828FF59EC00F17894 /* ShowPopupViewModel.swift */; };
 		D7CBACE928F70D4500B710BB /* HallOfFameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CBACE828F70D4500B710BB /* HallOfFameApp.swift */; };
 		D7CBACEB28F70D4500B710BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CBACEA28F70D4500B710BB /* ContentView.swift */; };
 		D7CBACED28F70D4900B710BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7CBACEC28F70D4900B710BB /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D7A1130828FF59EC00F17894 /* ShowPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPopupViewModel.swift; sourceTree = "<group>"; };
 		D7CBACE528F70D4500B710BB /* HallOfFame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HallOfFame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7CBACE828F70D4500B710BB /* HallOfFameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallOfFameApp.swift; sourceTree = "<group>"; };
 		D7CBACEA28F70D4500B710BB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 		D7CBACF628F70DAC00B710BB /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				D7A1130828FF59EC00F17894 /* ShowPopupViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7A1130928FF59EC00F17894 /* ShowPopupViewModel.swift in Sources */,
 				D7CBACEB28F70D4500B710BB /* ContentView.swift in Sources */,
 				D7CBACE928F70D4500B710BB /* HallOfFameApp.swift in Sources */,
 			);
