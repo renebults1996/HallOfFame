@@ -193,7 +193,6 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             BackgroundView()
-                .border(.green)
                 .onTapGesture {
                     withAnimation {
                         sheetManager.dismiss()
@@ -201,7 +200,7 @@ struct ContentView: View {
                 }
 
             ShowWindowButton()
-                .border(.green)
+                
         }
         .overlay(alignment: .bottom) {
             if sheetManager.action.isPressed {
