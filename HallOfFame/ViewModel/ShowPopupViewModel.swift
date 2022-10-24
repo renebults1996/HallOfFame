@@ -7,12 +7,4 @@
 
 import Foundation
 
-class PopupViewModel: ObservableObject {
-    
-    @Published var isPressed: String = "false"
-    
-    func isButtonPressed() {
-        isPressed = "true"
-        print("i am pressed")
-    }
-}
+

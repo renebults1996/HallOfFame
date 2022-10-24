@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct HallOfFameApp: App {
+    @StateObject var sheetManager = SheetManager()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(sheetManager)
         }
     }
 }

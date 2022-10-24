@@ -28,8 +28,7 @@ struct FlatGlassView : ViewModifier {
 struct FlatSignUpView: View {
     @State var email = ""
     @State var amount: Double = 0
-    @State var password = ""
-    @State var passwordAgain = ""
+
     
     var body: some View {
         if #available(iOS 15.0, *) {
@@ -86,17 +85,21 @@ struct BackgroundView: View {
     var body: some View {
         Image("kyogre_wallpaper")
             .resizable()
-            .scaledToFill()
             .edgesIgnoringSafeArea(.all)
     }
 }
 
 struct ShowWindowButton: View {
+    @EnvironmentObject var sheetManager: SheetManager
     
-    @EnvironmentObject var popupViewModel: PopupViewModel
-    
+
     var body: some View {
-        Button(action: {popupViewModel.isButtonPressed()}) {
+        Button() {
+            withAnimation {
+                sheetManager.present()
+            }
+    
+        } label: {
             Text("Show display")
                 .font(.system(size: 40, weight: .heavy, design: .rounded))
                 .foregroundColor(.white)
@@ -104,24 +107,39 @@ struct ShowWindowButton: View {
                 .padding(.horizontal, 40)
                 .background(Color.black.opacity(0.3))
                 .clipShape(RoundedRectangle(cornerRadius: 20))
+            
+            
         }
     }
 }
 
 struct PopupView: View {
+    @State var amount: Double = 0
+    let didClose: () -> Void
     var body: some View {
         VStack(spacing: .zero) {
             icon
             title
+            VStack(spacing: 12) {
+                Text("Amount you will donate: $\(amount, specifier: "%.2f")")
+                    .modifier(FlatGlassView())
+                Slider(value: $amount, in: 0...100)
+                    .modifier(FlatGlassView())
+            }
+
+            
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 24)
-        .padding(.vertical, 40)
+        .padding(.vertical, 100)
         .multilineTextAlignment(.center)
-        .background(background)
         .overlay(alignment: .topTrailing) {
             close
         }
+        .transition(.move(edge: .bottom))
+        .background(.ultraThinMaterial)
+        .foregroundColor(Color.primary.opacity(0.80))
+        .foregroundStyle(.ultraThinMaterial)
     }
 }
 
@@ -137,6 +155,7 @@ private extension PopupView {
     
     var close: some View {
         Button {
+            didClose()
             
         } label: {
             Image(systemName: "xmark")
@@ -147,6 +166,7 @@ private extension PopupView {
                 .padding(8)
         }
     }
+
     
     var icon: some View {
         Image(systemName: "info")
@@ -157,7 +177,7 @@ private extension PopupView {
     }
     
     var title: some View {
-        Text("Text here")
+        Text("Please select donation")
             .font(.system(size: 30, weight: .bold, design: .rounded)
             )
             .padding()
@@ -169,31 +189,41 @@ private extension PopupView {
 
 
 struct ContentView: View {
-    let showPopupViewModel = PopupViewModel()
+    @EnvironmentObject var sheetManager: SheetManager
     var body: some View {
         ZStack {
             BackgroundView()
                 .border(.green)
+                .onTapGesture {
+                    withAnimation {
+                        sheetManager.dismiss()
+                    }
+                }
 
             ShowWindowButton()
                 .border(.green)
         }
         .overlay(alignment: .bottom) {
-            PopupView()
+            if sheetManager.action.isPressed {
+                PopupView {
+                    withAnimation {
+                        sheetManager.dismiss()
+                    }
+                }
+            }
+            
                 
         }
         .ignoresSafeArea()
         
-        .environmentObject(showPopupViewModel)
+        
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        PopupView()
-            .padding()
-            .background(.blue)
-            .previewLayout(.sizeThatFits)
+        ContentView()
+            .environmentObject(SheetManager())
     }
 }
 
