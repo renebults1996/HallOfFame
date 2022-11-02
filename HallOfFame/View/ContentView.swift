@@ -99,8 +99,27 @@ struct ShowWindowButton: View {
                 .background(Color.orange.opacity(0.5))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }.popover(isPresented: $setting.isShowing) {
-            List(offerList) { package in
-                OfferRow(package: package)
+            VStack {
+                List(offerList) { package in
+                    OfferRow(package: package)
+                        .padding()
+                        .frame(maxHeight: .infinity)
+
+                        
+                }
+                
+                Button() {
+
+            
+                } label: {
+                    Text("Enter hall of fame")
+                        .font(.system(size: 28, weight: .heavy, design: .rounded))
+                        .foregroundColor(.white)
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 40)
+                        .background(Color.orange.opacity(0.5))
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
             }
         }
     }
