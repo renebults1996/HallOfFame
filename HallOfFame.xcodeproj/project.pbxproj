@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D7A1130928FF59EC00F17894 /* ShowPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A1130828FF59EC00F17894 /* ShowPopupViewModel.swift */; };
+		D7C0D1EF2912D6BC00A0FAE5 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C0D1EE2912D6BC00A0FAE5 /* StoreManager.swift */; };
 		D7CBACE928F70D4500B710BB /* HallOfFameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CBACE828F70D4500B710BB /* HallOfFameApp.swift */; };
 		D7CBACEB28F70D4500B710BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CBACEA28F70D4500B710BB /* ContentView.swift */; };
 		D7CBACED28F70D4900B710BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7CBACEC28F70D4900B710BB /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		D7A1130828FF59EC00F17894 /* ShowPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowPopupViewModel.swift; sourceTree = "<group>"; };
+		D7C0D1EE2912D6BC00A0FAE5 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		D7CBACE528F70D4500B710BB /* HallOfFame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HallOfFame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7CBACE828F70D4500B710BB /* HallOfFameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HallOfFameApp.swift; sourceTree = "<group>"; };
 		D7CBACEA28F70D4500B710BB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				D7A1130828FF59EC00F17894 /* ShowPopupViewModel.swift */,
+				D7C0D1EE2912D6BC00A0FAE5 /* StoreManager.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 			files = (
 				D7DD9F602911CB65001C6226 /* DonationPackage.swift in Sources */,
 				D7A1130928FF59EC00F17894 /* ShowPopupViewModel.swift in Sources */,
+				D7C0D1EF2912D6BC00A0FAE5 /* StoreManager.swift in Sources */,
 				D7CBACEB28F70D4500B710BB /* ContentView.swift in Sources */,
 				D7CBACE928F70D4500B710BB /* HallOfFameApp.swift in Sources */,
 			);

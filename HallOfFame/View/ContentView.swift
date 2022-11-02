@@ -8,23 +8,29 @@
 import SwiftUI
 
 struct OfferRow: View {
-    let package: Package
+    
+    var title: String
+    var description: String
+    var price: Int
+    // TODO remove list view and just create a few custom views
+    // in VStack. keep them inside of a list though
     
     var body: some View {
         HStack {
             HStack {
-                Image(systemName: "person.circle")
+                Image(systemName: "dollarsign.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 60, height: 60)
                     .clipped()
                     
                 VStack(alignment: .leading) {
-                    Text(package.title)
-                    Text(package.description)
+                    Text(self.title)
+                        .font(.headline)
+                    Text(self.description)
+                        .font(.caption2)
                 }
             }
-            .padding(5)
             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
             
             HStack {
@@ -32,7 +38,7 @@ struct OfferRow: View {
 
             
                 } label: {
-                    Text("\(package.price)")
+                    Text("Get for $\(self.price)")
                         .padding(10)
                         .font(.system(size: 12, weight: .heavy, design: .rounded))
                         .foregroundColor(.white)
@@ -43,12 +49,15 @@ struct OfferRow: View {
                     
             }
         }
+        .padding()
+        .frame(maxHeight: .infinity)
     }
 }
 
 
 struct IntroText: View {
     @State private var showing = false
+    
     var body: some View {
         ZStack {
             BackgroundView()
@@ -61,7 +70,7 @@ struct IntroText: View {
                     Text("If you choose to donate any amount, you will be privileged to enter the hall of fame, where you will be until eternity.")
                         .padding()
 
-                    ShowWindowButton()
+                    ShowWindowButton(storeManager: StoreManager())
                         .padding()
                 }
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
@@ -85,13 +94,15 @@ struct BackgroundView: View {
 
 struct ShowWindowButton: View {
     @EnvironmentObject var setting: ShowSetting
+    @StateObject var storeManager: StoreManager
+    
     var body: some View {
         Button() {
             setting.setShowing()
             print(setting.isShowing)
     
         } label: {
-            Text("Show donations")
+            Text("Show options")
                 .font(.system(size: 28, weight: .heavy, design: .rounded))
                 .foregroundColor(.white)
                 .padding(.vertical, 20)
@@ -100,26 +111,26 @@ struct ShowWindowButton: View {
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }.popover(isPresented: $setting.isShowing) {
             VStack {
-                List(offerList) { package in
-                    OfferRow(package: package)
-                        .padding()
-                        .frame(maxHeight: .infinity)
-
-                        
+                NavigationView {
+                    List(storeManager.myProducts, id: \.self) { product in
+                        OfferRow(title: "Small donation", description: "This is the smallest of all packages", price: 10)
+                        OfferRow(title: "Medium donation", description: "This package is a bit larger", price: 20)
+                        OfferRow(title: "Large donation", description: "This is a large package. Be weary.", price: 30)
+                            
+                    }
+                    .navigationTitle("Donation")
+                    .toolbar(content: {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                Button(action: {
+                                    //Restore products already purchased
+                                }) {
+                                    Text("Restore Purchases ")
+                                }
+                            }
+                        })
+ 
                 }
-                
-                Button() {
 
-            
-                } label: {
-                    Text("Enter hall of fame")
-                        .font(.system(size: 28, weight: .heavy, design: .rounded))
-                        .foregroundColor(.white)
-                        .padding(.vertical, 20)
-                        .padding(.horizontal, 40)
-                        .background(Color.orange.opacity(0.5))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                }
             }
         }
     }
@@ -127,15 +138,17 @@ struct ShowWindowButton: View {
     
 struct ContentView: View {
     @StateObject var setting = ShowSetting()
+    @StateObject var storeManager: StoreManager
     var body: some View {
         IntroText()
             .environmentObject(setting)
+            
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(storeManager: StoreManager())
     }
 }
 
