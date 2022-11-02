@@ -7,32 +7,16 @@
 
 import Foundation
 import StoreKit
+import SwiftUI
 
-struct Package: Hashable {
-    let id: String
+struct Package: Identifiable {
+    let id = UUID()
     let title: String
     let description: String
-    let locale: Locale
-    var isLocked: Bool
-    var price: String?
-    
-    lazy var formatter: NumberFormatter = {
-        let nf = NumberFormatter()
-        nf.numberStyle = .currency
-        nf.locale = locale
-        return nf
-    }()
-    
-    init(product: SKProduct, isLocked: Bool = true) {
-        self.id = product.productIdentifier
-        self.title = product.localizedTitle
-        self.description = product.localizedDescription
-        self.isLocked = isLocked
-        self.locale = product.priceLocale
-        
-        if isLocked {
-            self.price = formatter.string(from: product.price)
-        }
-    }
-    
+    var price: Double
 }
+
+
+let offerList = [Package(title: "small", description: "small package", price: 0.99),
+                 Package(title: "medium", description: "medium package", price: 4.99),
+                 Package(title: "large", description: "large package", price: 9.99)]

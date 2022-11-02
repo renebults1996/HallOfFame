@@ -7,10 +7,49 @@
 
 import SwiftUI
 
+struct OfferRow: View {
+    let package: Package
+    
+    var body: some View {
+        HStack {
+            HStack {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 60, height: 60)
+                    .clipped()
+                    
+                VStack(alignment: .leading) {
+                    Text(package.title)
+                    Text(package.description)
+                }
+            }
+            .padding(5)
+            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+            
+            HStack {
+                Button() {
+
+            
+                } label: {
+                    Text("\(package.price)")
+                        .padding(10)
+                        .font(.system(size: 12, weight: .heavy, design: .rounded))
+                        .foregroundColor(.white)
+                        .background(Color.orange.opacity(0.5))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        
+                }.buttonStyle(PlainButtonStyle())
+                    
+            }
+        }
+    }
+}
+
 
 struct IntroText: View {
+    @State private var showing = false
     var body: some View {
-        
         ZStack {
             BackgroundView()
             VStack {
@@ -19,7 +58,7 @@ struct IntroText: View {
                         .padding()
                         .font(.system(size: 24).bold())
                     
-                    Text("This is a proof-of-concept application. It assumes that a certain percentage of people is crazy enough to send money to a stranger. packages are hiding behind the button.")
+                    Text("If you choose to donate any amount, you will be privileged to enter the hall of fame, where you will be until eternity.")
                         .padding()
 
                     ShowWindowButton()
@@ -29,36 +68,12 @@ struct IntroText: View {
                 .padding(.trailing, 10)
                 .padding(.leading, 10)
                 .padding(.bottom, 0)
-                .frame(maxHeight: 320)
-                
-                VStack {
-                    HscrollView()
-                }
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
-                .padding(.top, 0)
-                .padding(.trailing, 10)
-                .padding(.leading, 10)
-                
+                .frame(maxHeight: .infinity)
             }
         }
     }
 }
 
-struct HscrollView: View {
-    var body: some View {
-        ScrollView(.horizontal) {
-            HStack(spacing: 0) {
-                ForEach(0..<5) {
-                    Text("Item \($0)")
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 60)
-                        .background(.red)
-                        .padding()
-                }
-            }
-        }
-    }
-}
 
 struct BackgroundView: View {
     var body: some View {
@@ -69,31 +84,39 @@ struct BackgroundView: View {
 }
 
 struct ShowWindowButton: View {
+    @EnvironmentObject var setting: ShowSetting
     var body: some View {
         Button() {
-
+            setting.setShowing()
+            print(setting.isShowing)
     
         } label: {
-            Text("Show packages")
+            Text("Show donations")
                 .font(.system(size: 28, weight: .heavy, design: .rounded))
                 .foregroundColor(.white)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 40)
                 .background(Color.orange.opacity(0.5))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
+        }.popover(isPresented: $setting.isShowing) {
+            List(offerList) { package in
+                OfferRow(package: package)
+            }
         }
     }
 }
-
+    
 struct ContentView: View {
+    @StateObject var setting = ShowSetting()
     var body: some View {
         IntroText()
+            .environmentObject(setting)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        IntroText()
+        ContentView()
     }
 }
 
